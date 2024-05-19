@@ -1,6 +1,6 @@
 ﻿namespace ProximaCentauriB
 {
-    internal class OrbitMap
+    internal class OrbitCalculator
     {
 
         /// <summary>
@@ -20,7 +20,7 @@
             }
             catch (FileNotFoundException e)
             {
-                Console.WriteLine($"ERROR: The file '{filename}' was not found: {e.Message}");
+                Console.WriteLine($"ERROR: {e.Message}");
             }
             catch (InvalidDataException e)
             {
@@ -47,6 +47,12 @@
             // Ensure the file path is relative to the current directory
             string currentDirectory = Directory.GetCurrentDirectory();
             string filepath = Path.Combine(currentDirectory, filename);
+
+            // Check if file exists
+            if (!File.Exists(filepath))
+            {
+                throw new FileNotFoundException($"File '{filepath}' could not be found.");
+            }
 
             string[] lines = File.ReadAllLines(filepath);
 
